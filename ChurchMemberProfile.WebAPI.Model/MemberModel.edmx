@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ChurchMemberProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MemberProfile">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MI" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nickname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthdate" Type="date" Nullable="false" />
+          <Property Name="LeaderId" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="Template" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MemberProfilePropertyValue">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="int" Nullable="false" />
+          <Property Name="PropertyID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PropertyTemplate">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TemplateName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TemplateDescription" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="PropertyTemplateItem">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TemplateID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Enabled" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MemberProfilePropertyValue_MemberProfile">
+          <End Role="MemberProfile" Type="Self.MemberProfile" Multiplicity="1" />
+          <End Role="MemberProfilePropertyValue" Type="Self.MemberProfilePropertyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberProfile">
+              <PropertyRef Name="RecordID" />
+            </Principal>
+            <Dependent Role="MemberProfilePropertyValue">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PropertyTemplateItem_PropertyTemplate">
+          <End Role="PropertyTemplate" Type="Self.PropertyTemplate" Multiplicity="1" />
+          <End Role="PropertyTemplateItem" Type="Self.PropertyTemplateItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyTemplate">
+              <PropertyRef Name="RecordID" />
+            </Principal>
+            <Dependent Role="PropertyTemplateItem">
+              <PropertyRef Name="TemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ChurchMemberProfileModelStoreContainer">
+          <EntitySet Name="MemberProfile" EntityType="Self.MemberProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberProfilePropertyValue" EntityType="Self.MemberProfilePropertyValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PropertyTemplate" EntityType="Self.PropertyTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PropertyTemplateItem" EntityType="Self.PropertyTemplateItem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MemberProfilePropertyValue_MemberProfile" Association="Self.FK_MemberProfilePropertyValue_MemberProfile">
+            <End Role="MemberProfile" EntitySet="MemberProfile" />
+            <End Role="MemberProfilePropertyValue" EntitySet="MemberProfilePropertyValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PropertyTemplateItem_PropertyTemplate" Association="Self.FK_PropertyTemplateItem_PropertyTemplate">
+            <End Role="PropertyTemplate" EntitySet="PropertyTemplate" />
+            <End Role="PropertyTemplateItem" EntitySet="PropertyTemplateItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChurchMemberProfileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MemberProfile">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LeaderId" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Template" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MemberProfilePropertyValues" Relationship="Self.FK_MemberProfilePropertyValue_MemberProfile" FromRole="MemberProfile" ToRole="MemberProfilePropertyValue" />
+        </EntityType>
+        <EntityType Name="MemberProfilePropertyValue">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="MemberProfile" Relationship="Self.FK_MemberProfilePropertyValue_MemberProfile" FromRole="MemberProfilePropertyValue" ToRole="MemberProfile" />
+        </EntityType>
+        <EntityType Name="PropertyTemplate">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TemplateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TemplateDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PropertyTemplateItems" Relationship="Self.FK_PropertyTemplateItem_PropertyTemplate" FromRole="PropertyTemplate" ToRole="PropertyTemplateItem" />
+        </EntityType>
+        <EntityType Name="PropertyTemplateItem">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TemplateID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Enabled" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="PropertyTemplate" Relationship="Self.FK_PropertyTemplateItem_PropertyTemplate" FromRole="PropertyTemplateItem" ToRole="PropertyTemplate" />
+        </EntityType>
+        <Association Name="FK_MemberProfilePropertyValue_MemberProfile">
+          <End Role="MemberProfile" Type="Self.MemberProfile" Multiplicity="1" />
+          <End Role="MemberProfilePropertyValue" Type="Self.MemberProfilePropertyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberProfile">
+              <PropertyRef Name="RecordID" />
+            </Principal>
+            <Dependent Role="MemberProfilePropertyValue">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PropertyTemplateItem_PropertyTemplate">
+          <End Role="PropertyTemplate" Type="Self.PropertyTemplate" Multiplicity="1" />
+          <End Role="PropertyTemplateItem" Type="Self.PropertyTemplateItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyTemplate">
+              <PropertyRef Name="RecordID" />
+            </Principal>
+            <Dependent Role="PropertyTemplateItem">
+              <PropertyRef Name="TemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ChurchMemberProfileEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MemberProfiles" EntityType="Self.MemberProfile" />
+          <EntitySet Name="MemberProfilePropertyValues" EntityType="Self.MemberProfilePropertyValue" />
+          <EntitySet Name="PropertyTemplates" EntityType="Self.PropertyTemplate" />
+          <EntitySet Name="PropertyTemplateItems" EntityType="Self.PropertyTemplateItem" />
+          <AssociationSet Name="FK_MemberProfilePropertyValue_MemberProfile" Association="Self.FK_MemberProfilePropertyValue_MemberProfile">
+            <End Role="MemberProfile" EntitySet="MemberProfiles" />
+            <End Role="MemberProfilePropertyValue" EntitySet="MemberProfilePropertyValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PropertyTemplateItem_PropertyTemplate" Association="Self.FK_PropertyTemplateItem_PropertyTemplate">
+            <End Role="PropertyTemplate" EntitySet="PropertyTemplates" />
+            <End Role="PropertyTemplateItem" EntitySet="PropertyTemplateItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ChurchMemberProfileModelStoreContainer" CdmEntityContainer="ChurchMemberProfileEntities">
+          <EntitySetMapping Name="MemberProfiles">
+            <EntityTypeMapping TypeName="ChurchMemberProfileModel.MemberProfile">
+              <MappingFragment StoreEntitySet="MemberProfile">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="MI" ColumnName="MI" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LeaderId" ColumnName="LeaderId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Template" ColumnName="Template" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberProfilePropertyValues">
+            <EntityTypeMapping TypeName="ChurchMemberProfileModel.MemberProfilePropertyValue">
+              <MappingFragment StoreEntitySet="MemberProfilePropertyValue">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyTemplates">
+            <EntityTypeMapping TypeName="ChurchMemberProfileModel.PropertyTemplate">
+              <MappingFragment StoreEntitySet="PropertyTemplate">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
+                <ScalarProperty Name="TemplateDescription" ColumnName="TemplateDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyTemplateItems">
+            <EntityTypeMapping TypeName="ChurchMemberProfileModel.PropertyTemplateItem">
+              <MappingFragment StoreEntitySet="PropertyTemplateItem">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
